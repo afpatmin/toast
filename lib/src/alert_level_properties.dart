@@ -16,7 +16,7 @@ class AlertLevelProperties {
 
 const Map<AlertLevel, AlertLevelProperties> properties = {
   AlertLevel.error: AlertLevelProperties(
-    backgroundColor: '#f00',
+    backgroundColor: '#E74851',
     color: '#fff',
     iconSVG: '''
         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -26,7 +26,7 @@ const Map<AlertLevel, AlertLevelProperties> properties = {
     className: 'toast-error',
   ),
   AlertLevel.info: AlertLevelProperties(
-    backgroundColor: '#333',
+    backgroundColor: '#264653',
     color: '#fff',
     iconSVG: '''
           <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -36,7 +36,7 @@ const Map<AlertLevel, AlertLevelProperties> properties = {
     className: 'toast-info',
   ),
   AlertLevel.success: AlertLevelProperties(
-    backgroundColor: '#0f0',
+    backgroundColor: '#2A9D8F',
     color: '#fff',
     iconSVG: '''
         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -46,7 +46,7 @@ const Map<AlertLevel, AlertLevelProperties> properties = {
     className: 'toast-success',
   ),
   AlertLevel.warning: AlertLevelProperties(
-    backgroundColor: '#f50',
+    backgroundColor: '#f87F62',
     color: '#fff',
     iconSVG: '''
         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">

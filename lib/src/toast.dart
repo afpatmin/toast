@@ -4,8 +4,6 @@ import 'dart:svg';
 
 import 'alert_level_properties.dart';
 
-export 'alert_level_properties.dart' show AlertLevel;
-
 class Toast {
   final AlertLevel alertLevel;
 
@@ -28,7 +26,71 @@ class Toast {
   int get toastCount =>
       dom.document.body?.querySelectorAll('div.af-toast').length ?? 0;
 
-  Toast({
+  factory Toast.error(
+          {String title = 'Error',
+          required String text,
+          int width = 600,
+          int padding = 12,
+          int iconSize = 24,
+          Duration? duration}) =>
+      Toast._(
+          title: title,
+          text: text,
+          width: width,
+          padding: padding,
+          iconSize: iconSize,
+          duration: duration,
+          alertLevel: AlertLevel.error);
+
+  factory Toast.info(
+          {String title = 'Information',
+          required String text,
+          int width = 600,
+          int padding = 12,
+          int iconSize = 24,
+          Duration? duration}) =>
+      Toast._(
+          title: title,
+          text: text,
+          width: width,
+          padding: padding,
+          iconSize: iconSize,
+          duration: duration,
+          alertLevel: AlertLevel.info);
+
+  factory Toast.success(
+          {String title = 'Success',
+          required String text,
+          int width = 600,
+          int padding = 12,
+          int iconSize = 24,
+          Duration? duration}) =>
+      Toast._(
+          title: title,
+          text: text,
+          width: width,
+          padding: padding,
+          iconSize: iconSize,
+          duration: duration,
+          alertLevel: AlertLevel.success);
+
+  factory Toast.warning(
+          {String title = 'Warning',
+          required String text,
+          int width = 600,
+          int padding = 12,
+          int iconSize = 24,
+          Duration? duration}) =>
+      Toast._(
+          title: title,
+          text: text,
+          width: width,
+          padding: padding,
+          iconSize: iconSize,
+          duration: duration,
+          alertLevel: AlertLevel.warning);
+
+  Toast._({
     this.alertLevel = AlertLevel.info,
     required String title,
     required String text,
