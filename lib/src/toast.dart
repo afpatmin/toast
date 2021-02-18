@@ -103,6 +103,7 @@ class Toast {
   })  : _heading = dom.HeadingElement.h2()
           ..className = 'af-heading'
           ..style.fontSize = '1.2rem'
+          ..style.fontWeight = '600'
           ..style.margin = '0'
           ..style.overflow = 'hidden'
           ..style.textOverflow = 'ellipsis'
@@ -110,7 +111,9 @@ class Toast {
           ..innerText = title,
         _text = dom.ParagraphElement()
           ..className = 'af-text'
+          ..styleMap?.set('all', 'initial')
           ..style.fontSize = '1rem'
+          ..style.lineHeight = '1rem'
           ..style.margin = '0 0 0 8px'
           ..style.flex = '1'
           ..innerText = text,
@@ -158,6 +161,20 @@ class Toast {
     _content..append(titleRow)..append(textRow);
     _container.append(_content);
     dom.document.body?.append(_container);
+
+    if (dom.document.head?.querySelector('#af-toast-style') == null) {
+      final css = dom.StyleElement()
+        ..id = 'af-toast-style'
+        ..innerHtml = '''
+          div.af-title h2.af-heading {
+            all: unset;
+          }
+          div.af-text p.af-text {
+            all: unset;
+          }
+        ''';
+      dom.document.head?.children.add(css);
+    }
 
     if (duration != null) {
       timer = Timer(duration, close);
