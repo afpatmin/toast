@@ -130,7 +130,7 @@ class Toast {
       ..style.width = '100vw'
       ..style.display = 'flex'
       ..style.justifyContent = 'center'
-      ..style.transition = 'bottom 300ms ease, opacity 200ms ease';
+      ..style.transition = 'bottom 200ms ease, opacity 300ms ease';
 
     _content
       ..classes = ['af-toast', property.className]
@@ -139,8 +139,15 @@ class Toast {
       ..style.marginLeft = '${_toastMargin}px'
       ..style.marginRight = '${_toastMargin}px'
       ..style.width = '${width}px'
-      ..style.backgroundColor = property.backgroundColor
-      ..style.color = property.color;
+      ..style.backgroundColor = property.backgroundColor;
+
+    final font = dom.document.body?.getComputedStyle().fontFamily;
+
+    _heading.style.color = property.color;
+    _closeButton.style.color = property.color;
+    _text.style.color = property.color;
+    _heading.style.fontFamily = font;
+    _text.style.fontFamily = font;
 
     final titleRow = dom.DivElement()
       ..className = 'af-title'
@@ -167,10 +174,13 @@ class Toast {
         ..id = 'af-toast-style'
         ..innerHtml = '''
           div.af-title h2.af-heading {
-            all: unset;
+            all: initial;
+          }
+          div.af-title div.af-button-close {
+            all: initial;
           }
           div.af-text p.af-text {
-            all: unset;
+            all: initial;
           }
         ''';
       dom.document.head?.children.add(css);
@@ -187,7 +197,7 @@ class Toast {
 
   void close() async {
     timer?.cancel();
-    _content.style.opacity = '0';
+    _container.style.opacity = '0';
     await Future.delayed(const Duration(milliseconds: 300));
     _container.remove();
     evaluatePositions();
