@@ -4,9 +4,11 @@ import 'dart:svg';
 
 import 'alert_level_properties.dart';
 
+final int _toastMargin = 4;
+
 class Toast {
   final AlertLevel alertLevel;
-
+  final dom.DivElement _container = dom.DivElement();
   final dom.DivElement _content = dom.DivElement();
   final dom.DivElement _closeButton = dom.DivElement()
     ..className = 'af-button-close'
@@ -24,7 +26,7 @@ class Toast {
   Timer? timer;
 
   int get toastCount =>
-      dom.document.body?.querySelectorAll('div.af-toast').length ?? 0;
+      dom.document.body?.querySelectorAll('div.af-toast-container').length ?? 0;
 
   factory Toast.error(
           {String title = 'Error',
@@ -100,6 +102,7 @@ class Toast {
     Duration? duration,
   })  : _heading = dom.HeadingElement.h2()
           ..className = 'af-heading'
+          ..style.fontSize = '1.2rem'
           ..style.margin = '0'
           ..style.overflow = 'hidden'
           ..style.textOverflow = 'ellipsis'
@@ -107,6 +110,7 @@ class Toast {
           ..innerText = title,
         _text = dom.ParagraphElement()
           ..className = 'af-text'
+          ..style.fontSize = '1rem'
           ..style.margin = '0 0 0 8px'
           ..style.flex = '1'
           ..innerText = text,
@@ -114,17 +118,24 @@ class Toast {
           ..attributes['width'] = '$iconSize'
           ..attributes['height'] = '$iconSize' {
     final property = properties[alertLevel]!;
-    _content
-      ..classes = ['af-toast', property.className]
-      ..style.transition = 'bottom 300ms ease, opacity 300ms ease'
-      ..style.borderRadius = '4px'
-      ..style.padding = '${padding}px'
+    _container
+      ..classes = ['af-toast-container']
       ..style.position = 'fixed'
       ..style.zIndex = '${999 - toastCount}'
       ..style.bottom = '-100px'
+      ..style.left = '0'
+      ..style.width = '100vw'
+      ..style.display = 'flex'
+      ..style.justifyContent = 'center'
+      ..style.transition = 'bottom 300ms ease, opacity 200ms ease';
+
+    _content
+      ..classes = ['af-toast', property.className]
+      ..style.borderRadius = '4px'
+      ..style.padding = '${padding}px'
+      ..style.marginLeft = '${_toastMargin}px'
+      ..style.marginRight = '${_toastMargin}px'
       ..style.width = '${width}px'
-      ..style.marginLeft = '${-0.5 * width}px'
-      ..style.left = '50%'
       ..style.backgroundColor = property.backgroundColor
       ..style.color = property.color;
 
@@ -145,7 +156,8 @@ class Toast {
       ..append(_text);
 
     _content..append(titleRow)..append(textRow);
-    dom.document.body?.append(_content);
+    _container.append(_content);
+    dom.document.body?.append(_container);
 
     if (duration != null) {
       timer = Timer(duration, close);
@@ -153,25 +165,26 @@ class Toast {
 
     _closeButton.onClick.first.then((_) => close());
     Future.delayed(const Duration(milliseconds: 10))
-        .then((_) => _evaluatePositions(margin: 4));
+        .then((_) => evaluatePositions());
   }
 
   void close() async {
     timer?.cancel();
     _content.style.opacity = '0';
     await Future.delayed(const Duration(milliseconds: 300));
-    _content.remove();
-    _evaluatePositions(margin: 4);
+    _container.remove();
+    evaluatePositions();
   }
+}
 
-  void _evaluatePositions({required int margin}) {
-    final elements = dom.document.body?.querySelectorAll('div.af-toast');
-    if (elements != null) {
-      var bottom = margin;
-      for (final element in elements) {
-        element.style.bottom = '${bottom}px';
-        bottom += margin + element.clientHeight;
-      }
+void evaluatePositions() {
+  final elements =
+      dom.document.body?.querySelectorAll('div.af-toast-container');
+  if (elements != null) {
+    var bottom = _toastMargin;
+    for (final element in elements) {
+      element.style.bottom = '${bottom}px';
+      bottom += _toastMargin + element.clientHeight;
     }
   }
 }

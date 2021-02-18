@@ -1,4 +1,4 @@
-name: toast
+name: web_toast
 description: A small framework-agnostic library for displaying popup info
   messages ("toasts") in web apps
 version: 1.0.0-nullsafety

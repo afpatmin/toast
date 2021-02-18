@@ -1,8 +1,7 @@
-import 'package:toast/toast.dart';
+import 'package:web_toast/web_toast.dart';
 
 void main() {
-  Toast(
-      title: 'Info',
+  Toast.info(
       text: 'Your changes has been saved!',
       duration: const Duration(seconds: 3));
 }
