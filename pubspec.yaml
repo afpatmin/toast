@@ -1,7 +1,7 @@
 name: web_toast
 description: A small framework-agnostic library for displaying popup info
   messages ("toasts") in web apps
-version: 1.0.1-nullsafety
+version: 1.0.2-nullsafety
 homepage: https://www.github.com/afpatmin/toast
 environment:
   sdk: '>=2.12.0-0 <3.0.0'
