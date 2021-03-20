@@ -1,3 +1,6 @@
+## 1.0.4-nullsafety
+- Fixed issue where elements to the left and right toast couldn't be clicked
+
 ## 1.0.3-nullsafety
 - Fixed issue where body line-height affected close icon placement
 - Fixed issue where the Toast didn't fade out when removed
