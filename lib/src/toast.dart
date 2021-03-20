@@ -123,6 +123,7 @@ class Toast {
     final property = properties[alertLevel]!;
     _container
       ..classes = ['af-toast-container']
+      ..style.pointerEvents = 'none'
       ..style.position = 'fixed'
       ..style.zIndex = '${999 - toastCount}'
       ..style.bottom = '-100px'
